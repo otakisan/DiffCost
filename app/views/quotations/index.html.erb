@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Quotations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Project name</th>
+      <th>Quotation text</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @quotations.each do |quotation| %>
+      <tr>
+        <td><%= quotation.user %></td>
+        <td><%= quotation.project_name %></td>
+        <td><%= quotation.quotation_text %></td>
+        <td><%= link_to 'Show', quotation %></td>
+        <td><%= link_to 'Edit', edit_quotation_path(quotation) %></td>
+        <td><%= link_to 'Destroy', quotation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Quotation', new_quotation_path %>

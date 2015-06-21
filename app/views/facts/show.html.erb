@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @fact.user %>
+</p>
+
+<p>
+  <strong>Project name:</strong>
+  <%= @fact.project_name %>
+</p>
+
+<p>
+  <strong>Fact text:</strong>
+  <%= @fact.fact_text %>
+</p>
+
+<%= link_to 'Edit', edit_fact_path(@fact) %> |
+<%= link_to 'Back', facts_path %>
