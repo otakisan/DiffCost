@@ -8,6 +8,10 @@ class QuotationsController < ApplicationController
     @quotations = Quotation.all
   end
 
+  def project_index
+    @quotations_projects = Quotation.group("project_name").select("project_name")
+  end
+
   # GET /quotations/1
   # GET /quotations/1.json
   def show

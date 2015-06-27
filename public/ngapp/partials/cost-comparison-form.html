@@ -1,0 +1,49 @@
+<div ng-submit="costComparisonForm.$valid && costComparison.submitForm()">
+	<h4>{{costComparison.pageTitle}} <i ng-show="costComparison.waiting" class="fa fa-spinner fa-spin"></i></h4>	
+	<hr>
+	<form name="costComparisonForm" novalidate>
+		<div>
+			<h6>{{costComparison.userId}}</h6>
+		</div>
+		<select ng-model="costComparison.selectedProject" ng-change="costComparison.changedSelectedProject()" ng-options="c.project_name as c.project_name for c in costComparison.projects"></select>
+		<button type="submit" ng-class="{'btn': true }" >表示</button>
+		<!-- <button type="button" ng-class="{'btn': true }" ng-click="costComparison.downloadCsv()">CSV出力</button> -->
+		<a ng-href="{{costComparison.csvUrl}}">CSV出力</a>
+	</form>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>案件名</th>
+						<th>見積内容</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="quotation in costComparison.costComparisonResult.quotations">
+						<td>{{quotation.project_name}}</td>
+						<td>{{quotation.quotation_text}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>案件名</th>
+						<th>実績内容</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="fact in costComparison.costComparisonResult.facts">
+						<td>{{fact.project_name}}</td>
+						<td>{{fact.fact_text}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</div>

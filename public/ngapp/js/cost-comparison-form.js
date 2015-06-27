@@ -1,11 +1,11 @@
 (function () {
-	angular.module('costComparisonApp', [])
+	angular.module('costComparisonFormApp', [])
 		.directive('costComparisonForm', function () {
 		// templateUrlは、ディレクティブを呼び出しているページからの相対パス
 		// ルートからの相対パスにして、どこからでも使えるようにする
 		return {
 			restrict: 'E',
-			templateUrl: '/ngapp/partials/cost-comparison.html',
+			templateUrl: '/ngapp/partials/cost-comparison-form.html',
 			controller: ['$http', function ($http) {
 				// ケアレスミスを防ぐため、最初にthisを移し替えることをルールとしたほうがいいのかも
 				var thisController = this;
@@ -17,11 +17,14 @@
 				thisController.projects = [];
 				thisController.costComparisonResult = {};
 				thisController.userId = "";
+				thisController.waiting = false;
+				thisController.csvUrl = "";
 			
 				// プロジェクトの種類を取得
-				$http.get('/quotations/projectindex.json').success(function (data) {
+				$http.get('/quotations/projects/index.json').success(function (data) {
 					thisController.projects = data;
 					thisController.selectedProject = thisController.projects[0].project_name;
+					thisController.changedSelectedProject();
 				});
 			
 				// プロパティもメソッドも全部定義するから、中身が膨れやすい
@@ -29,17 +32,22 @@
 					thisController.pageTitle = "取得中... : ";
 				
 					// 実績比較表取得のためのデータを取得
-					var postData = thisController.getPostData();
+					//var postData = thisController.getPostData();
 				
 					// 登録
-					$http.post(postData.url, postData.params)
+					//$http.post(postData.url, postData.params)
+					thisController.waiting = true;
+					var project_name_encoded = encodeURIComponent(thisController.selectedProject);
+					$http.get("/cost_comparisons/" + project_name_encoded + ".json")
 						.success(function (data, status, headers, config) {
 						thisController.pageTitle = "取得完了 ID：" + thisController.selectedProject;
 						thisController.costComparisonResult = data;
+						thisController.waiting = false;
 					})
 						.error(function (data, status, headers, config) {
 						thisController.pageTitle = "取得失敗";
 						thisController.costComparisonResult = data;
+						thisController.waiting = false;
 					});
 				};
 				
@@ -63,22 +71,30 @@
 					return postParam;
 				};
 				
-				this.postRequestCsv = function () {
+				this.downloadCsv = function () {
 					thisController.pageTitle = "CSV取得中... : ";
 				
 					// 実績比較表取得のためのデータを取得
-					var postData = thisController.getPostData();
+					//var postData = thisController.getPostData();
 				
 					// 登録
 					// TODO:どういうリクエストを送ればいい？
-					$http.post('/cost-comparisons/csvdata', postData.params)
+					thisController.waiting = true;
+					var project_name_encoded = encodeURIComponent(thisController.selectedProject);
+					$http.get("/cost_comparisons/download/" + project_name_encoded + ".csv")
 						.success(function (data, status, headers, config) {
-						thisController.pageTitle = "登録完了 ID：" + data.id;
-						thisController.userText = "";
+						thisController.pageTitle = "取得完了";
+						thisController.waiting = false;
 					})
 						.error(function (data, status, headers, config) {
-						thisController.pageTitle = "登録失敗";
+						thisController.pageTitle = "取得失敗";
+						thisController.waiting = false;
 					});
+				};
+				
+				this.changedSelectedProject = function () {
+					var project_name_encoded = encodeURIComponent(thisController.selectedProject);
+					thisController.csvUrl = "/cost_comparisons/download/" + project_name_encoded + ".csv";
 				};
 			}],
 			controllerAs: 'costComparison'

@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   resources :facts
   resources :quotations
+  # おそらくRestful的な考え方だと、リソースを特定する要素でurlが構成される感じなんだろうけど…
+  get '/quotations/projects/index(.:format)' => 'quotations#project_index'
+  get '/quotations/projects/show/:project_name(.:format)' => 'quotations#show_projects'
+
+  get '/cost_comparisons/:project_name(.:format)' => 'cost_comparisons#show'
+  get '/cost_comparisons/download/:project_name(.:format)' => 'cost_comparisons#download'
+
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

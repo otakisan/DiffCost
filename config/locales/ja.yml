@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      quotation: 見積
+      fact: 実績
+    attributes:
+      quotation:
+        project_name: プロジェクト名（見積）
+        quotation_text: 見積内容
+      fact:
+        project_name: プロジェクト名（実績）
+        fact_text: 実績内容
+
