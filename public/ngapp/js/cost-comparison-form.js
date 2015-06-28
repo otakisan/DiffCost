@@ -40,7 +40,7 @@
 					var project_name_encoded = encodeURIComponent(thisController.selectedProject);
 					$http.get("/cost_comparisons/" + project_name_encoded + ".json")
 						.success(function (data, status, headers, config) {
-						thisController.pageTitle = "取得完了 ID：" + thisController.selectedProject;
+						thisController.pageTitle = "取得完了：" + thisController.selectedProject;
 						thisController.costComparisonResult = data;
 						thisController.waiting = false;
 					})
