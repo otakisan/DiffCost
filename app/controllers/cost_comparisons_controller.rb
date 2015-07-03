@@ -8,8 +8,8 @@ class CostComparisonsController < ApplicationController
   end
 
   def download
-    @quotations = Quotation.where('project_name = ?', params[:project_name])
-    @facts = Fact.where('project_name = ?', params[:project_name])
+    @quotations = Quotation.where('project_name = ?', params[:project_name]).order('updated_at')
+    @facts = Fact.where('project_name = ?', params[:project_name]).order('updated_at')
 
     respond_to do |format|
       format.html { redirect_to :action => 'download', :format => 'csv' } # .csv がなくアクセスした場合はリダイレクト

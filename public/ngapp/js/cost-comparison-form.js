@@ -19,6 +19,7 @@
 				thisController.userId = "";
 				thisController.waiting = false;
 				thisController.csvUrl = "";
+				thisController.quotationsTerm = {start: "", end: ""};
 			
 				// プロジェクトの種類を取得
 				$http.get('/quotations/projects/index.json').success(function (data) {
@@ -43,6 +44,10 @@
 						thisController.pageTitle = "取得完了：" + thisController.selectedProject;
 						thisController.costComparisonResult = data;
 						thisController.waiting = false;
+						if (data.quotations.length > 0) {
+							thisController.quotationsTerm.start = data.quotations[0].updated_at;
+							thisController.quotationsTerm.end = data.quotations[data.quotations.length - 1].updated_at;
+						}
 					})
 						.error(function (data, status, headers, config) {
 						thisController.pageTitle = "取得失敗";
