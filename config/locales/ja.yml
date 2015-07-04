@@ -7,7 +7,8 @@ ja:
       quotation:
         project_name: プロジェクト名（見積）
         quotation_text: 見積内容
+        updated_at: 更新日時（見積）
       fact:
         project_name: プロジェクト名（実績）
         fact_text: 実績内容
-
+        updated_at: 更新日時（実績）

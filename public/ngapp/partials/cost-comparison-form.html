@@ -10,16 +10,21 @@
 		<!-- <button type="button" ng-class="{'btn': true }" ng-click="costComparison.downloadCsv()">CSV出力</button> -->
 		<a ng-href="{{costComparison.csvUrl}}">CSV出力</a>
 	</form>
+	<br>
 	<div>
 		<table class="table">
 			<tbody>
 				<tr>
 					<th>案件名</th>
-					<td>{{costComparison.selectedProject}}</td>
+					<td>{{costComparison.getProjectNameText()}}</td>
 				</tr>
 				<tr>
 					<th>見積期間</th>
-					<td>{{costComparison.quotationsTerm.start}}〜{{costComparison.quotationsTerm.end}}</td>
+					<td>{{costComparison.getQuotationTermText()}}</td>
+				</tr>
+				<tr>
+					<th>実績期間</th>
+					<td>{{costComparison.getFactTermText()}}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -29,14 +34,16 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>案件名</th>
+						<th ng-hide="true">案件名</th>
 						<th>見積内容</th>
+						<th>見積日時</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="quotation in costComparison.costComparisonResult.quotations">
-						<td>{{quotation.project_name}}</td>
+						<td ng-hide="true">{{quotation.project_name}}</td>
 						<td>{{quotation.quotation_text}}</td>
+						<td>{{quotation.updated_at | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -45,14 +52,16 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>案件名</th>
+						<th ng-hide="true">案件名</th>
 						<th>実績内容</th>
+						<th>実績日時</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="fact in costComparison.costComparisonResult.facts">
-						<td>{{fact.project_name}}</td>
+						<td ng-hide="true">{{fact.project_name}}</td>
 						<td>{{fact.fact_text}}</td>
+						<td>{{fact.updated_at | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
 					</tr>
 				</tbody>
 			</table>

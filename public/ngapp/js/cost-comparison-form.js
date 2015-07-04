@@ -13,7 +13,8 @@
 				// ユーザーをひも付ける情報は、railsのidとアプリのidとどちらがよいか
 				// データベースの移行を考えると、連番よりも固有のアカウントIDのほうがよさそうに感じる
 				// API越しに関連付ける際、デフォルトのUser.idではなく、User.user_idとひも付ける
-				thisController.pageTitle = "見積・実績比較";
+				thisController.pageTitleDefault = "見積・実績比較";
+				thisController.pageTitle = thisController.pageTitleDefault;
 				thisController.projects = [];
 				thisController.costComparisonResult = {};
 				thisController.userId = "";
@@ -31,23 +32,16 @@
 				// プロパティもメソッドも全部定義するから、中身が膨れやすい
 				this.submitForm = function () {
 					thisController.pageTitle = "取得中... : ";
-				
-					// 実績比較表取得のためのデータを取得
-					//var postData = thisController.getPostData();
-				
-					// 登録
-					//$http.post(postData.url, postData.params)
+
+					// データを取得
 					thisController.waiting = true;
 					var project_name_encoded = encodeURIComponent(thisController.selectedProject);
 					$http.get("/cost_comparisons/" + project_name_encoded + ".json")
 						.success(function (data, status, headers, config) {
-						thisController.pageTitle = "取得完了：" + thisController.selectedProject;
+						// タイトルを元に戻し、データを保持
+						thisController.pageTitle = thisController.pageTitleDefault;
 						thisController.costComparisonResult = data;
 						thisController.waiting = false;
-						if (data.quotations.length > 0) {
-							thisController.quotationsTerm.start = data.quotations[0].updated_at;
-							thisController.quotationsTerm.end = data.quotations[data.quotations.length - 1].updated_at;
-						}
 					})
 						.error(function (data, status, headers, config) {
 						thisController.pageTitle = "取得失敗";
@@ -55,11 +49,31 @@
 						thisController.waiting = false;
 					});
 				};
-				
-				this.refreshCostComparisonTable = function() {
-					
+
+				// TODO: 画面のラベルに表示する文字列はコントローラーの責務でないように思えるが、一旦実装する
+				this.getQuotationTermText = function() {
+					return this.getTermText(this.costComparisonResult.quotations);
 				};
-				
+
+				this.getFactTermText = function() {
+					return this.getTermText(this.costComparisonResult.facts);
+				};
+
+				this.getTermText = function(dataArray) {
+					var quotationTermText = "";
+					if (dataArray && dataArray.length > 0) {
+						quotationTermText = new Date(dataArray[0].updated_at).toLocaleString() + " 〜 "
+						+ new Date(dataArray[dataArray.length - 1].updated_at).toLocaleString();
+					}
+					
+					return quotationTermText;
+				};
+
+				this.getProjectNameText = function() {
+					var dataArray = this.costComparisonResult.quotations || this.costComparisonResult.facts;
+					return dataArray && dataArray.length > 0 ? dataArray[0].project_name : "";
+				};
+
 				this.getPostData = function () {
 					return {
 						'url': '/cost-comparisons.json',
@@ -82,7 +96,7 @@
 					// 実績比較表取得のためのデータを取得
 					//var postData = thisController.getPostData();
 				
-					// 登録
+					// 取得
 					// TODO:どういうリクエストを送ればいい？
 					thisController.waiting = true;
 					var project_name_encoded = encodeURIComponent(thisController.selectedProject);
