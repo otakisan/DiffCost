@@ -62,8 +62,10 @@
 				this.getTermText = function(dataArray) {
 					var quotationTermText = "";
 					if (dataArray && dataArray.length > 0) {
-						quotationTermText = new Date(dataArray[0].updated_at).toLocaleString() + " 〜 "
-						+ new Date(dataArray[dataArray.length - 1].updated_at).toLocaleString();
+						// 分単位で表示（対応ブラウザのみ）
+						var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+						quotationTermText = new Date(dataArray[0].updated_at).toLocaleString('ja-JP', options).replace("JST", "") + " 〜 "
+						+ new Date(dataArray[dataArray.length - 1].updated_at).toLocaleString('ja-JP', options).replace("JST", "");
 					}
 					
 					return quotationTermText;

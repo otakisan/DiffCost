@@ -6,7 +6,7 @@
 			<h6>{{costComparison.userId}}</h6>
 		</div>
 		<select ng-model="costComparison.selectedProject" ng-change="costComparison.changedSelectedProject()" ng-options="c.project_name as c.project_name for c in costComparison.projects"></select>
-		<button type="submit" ng-class="{'btn': true }" >表示</button>
+		<button class="btn-sm btn-primary" type="submit" ng-class="{'btn': true }" >表示</button>
 		<!-- <button type="button" ng-class="{'btn': true }" ng-click="costComparison.downloadCsv()">CSV出力</button> -->
 		<a ng-href="{{costComparison.csvUrl}}">CSV出力</a>
 	</form>
@@ -30,7 +30,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-lg-6 col-xs-12">
 			<table class="table">
 				<thead>
 					<tr>
@@ -48,7 +48,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-6">
+		<div class="col-lg-6 col-xs-12">
 			<table class="table">
 				<thead>
 					<tr>
