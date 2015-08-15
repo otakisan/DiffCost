@@ -1,0 +1,14 @@
+{
+	"version": "0.1.0",
+	"command": "babel",
+	"isShellCommand": true,
+	"tasks": [
+		{
+			"args": ["public/ngapp/js", "--out-dir", "public/ngapp/build/js", "-w", "--source-maps"],
+			"taskName": "build",
+			"suppressTaskName": true,
+			"isBuildCommand": true, // make this the F1 > Task: Run Build Task gesture
+			"isWatching": true // tell VS Code not wait for this task to finish
+		}
+	]
+}
