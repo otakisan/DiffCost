@@ -7,9 +7,11 @@ csv_str = CSV.generate do |csv|
   cols = {
     Quotation.human_attribute_name(:project_name)  => ->(q, f){ q.nil? ? "" : q.project_name },
     Quotation.human_attribute_name(:quotation_text)  => ->(q, f){ q.nil? ? "" : q.quotation_text },
+    Quotation.human_attribute_name(:man_day)  => ->(q, f){ q.nil? ? "" : q.man_day },
     Quotation.human_attribute_name(:updated_at)  => ->(q, f){ q.nil? ? "" : q.updated_at.localtime.to_s.gsub(/ \+[0-9]{4}/, "") },
     Fact.human_attribute_name(:project_name)  => ->(q, f){ f.nil? ? "" : f.project_name },
     Fact.human_attribute_name(:fact_text)  => ->(q, f){ f.nil? ? "" : f.fact_text },
+    Fact.human_attribute_name(:man_day)  => ->(q, f){ f.nil? ? "" : f.man_day },
     Fact.human_attribute_name(:updated_at)  => ->(q, f){ f.nil? ? "" : f.updated_at.localtime.to_s.gsub(/ \+[0-9]{4}/, "") }
   }
 

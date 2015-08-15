@@ -67,7 +67,8 @@
 					var projectNameAndText = thisController.splitProjectNameAndText();
 					var postParam = {
 						'project_name': projectNameAndText.project_name,
-						'user_id': thisController.userTableId
+						'user_id': thisController.userTableId,
+						'man_day': projectNameAndText.man_day
 					};
 					postParam[textPropName] = projectNameAndText.text;
 
@@ -79,11 +80,21 @@
 					// #始まりはプロジェクト案件名、空白で区切って、以降は全て内容とする
 					var re = /(^#.+?(?=\s+))?(.+)/g;
 					var matchArray = re.exec(thisController.userText.trim());
+
+					var manDay = "";
+					var text = matchArray[2].trim();
+					var manDayMatch = /\b([0-9][0-9\.]*)(?=人日)/g.exec(matchArray[2]);
+					if(manDayMatch){
+						manDay = manDayMatch[1];
+						var regex = new RegExp(`\\b${manDay}人日`);
+						text = matchArray[2].replace(regex, "").trim();
+					}
 				
 					// よりシンプルな形で#を取り除く方法ってどんなものか
 					return {
-						'text': matchArray[2].trim(),
-						'project_name': /^#(.*)/g.exec(matchArray[1] || '#')[1]
+						'text': text,
+						'project_name': /^#(.*)/g.exec(matchArray[1] || '#')[1],
+						'man_day': manDay
 					};
 				};
 			}],

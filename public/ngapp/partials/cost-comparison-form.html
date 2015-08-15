@@ -19,6 +19,10 @@
 					<td>{{costComparison.getProjectNameText()}}</td>
 				</tr>
 				<tr>
+					<th>工数</th>
+					<td>{{costComparison.getTotalManDayText()}}</td>
+				</tr>
+				<tr>
 					<th>見積期間</th>
 					<td>{{costComparison.getQuotationTermText()}}</td>
 				</tr>
@@ -36,6 +40,7 @@
 					<tr>
 						<th ng-hide="true">案件名</th>
 						<th>見積内容</th>
+						<th>工数（人日）</th>
 						<th>見積日時</th>
 					</tr>
 				</thead>
@@ -43,6 +48,7 @@
 					<tr ng-repeat="quotation in costComparison.costComparisonResult.quotations">
 						<td ng-hide="true">{{quotation.project_name}}</td>
 						<td>{{quotation.quotation_text}}</td>
+						<td>{{quotation.man_day}}</td>
 						<td>{{quotation.updated_at | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
 					</tr>
 				</tbody>
@@ -54,6 +60,7 @@
 					<tr>
 						<th ng-hide="true">案件名</th>
 						<th>実績内容</th>
+						<th>工数（人日）</th>
 						<th>実績日時</th>
 					</tr>
 				</thead>
@@ -61,6 +68,7 @@
 					<tr ng-repeat="fact in costComparison.costComparisonResult.facts">
 						<td ng-hide="true">{{fact.project_name}}</td>
 						<td>{{fact.fact_text}}</td>
+						<td>{{fact.man_day}}</td>
 						<td>{{fact.updated_at | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
 					</tr>
 				</tbody>

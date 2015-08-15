@@ -76,6 +76,25 @@
 					return dataArray && dataArray.length > 0 ? dataArray[0].project_name : "";
 				};
 
+				this.getTotalManDayText = function() {
+					var mandayQ = this.getTotalManDayOfQuotations();
+					var mandayF = this.getTotalManDayOfFacts();
+					return !mandayQ && !mandayF ? "" : `見積：${mandayQ} ／ 実績：${mandayF}`;
+				};
+
+				this.getTotalManDayOfQuotations = function() {
+					return this.getTotalManDay(this.costComparisonResult.quotations);
+				};
+
+				this.getTotalManDayOfFacts = function() {
+					return this.getTotalManDay(this.costComparisonResult.facts);
+				};
+
+				this.getTotalManDay = function(array) {
+					// TODO: 小数点の扱い 見た目上の合計と差異が出る 12.9 <=> 12.89999...
+					return !array ? "" : array.reduce(function(prevValue, currentValue, currentIndex, array){return prevValue + currentValue.man_day}, 0);
+				};
+
 				this.getPostData = function () {
 					return {
 						'url': '/cost-comparisons.json',

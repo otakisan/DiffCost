@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150620012531) do
+ActiveRecord::Schema.define(version: 20150812225615) do
 
   create_table "facts", force: :cascade do |t|
     t.integer  "user_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150620012531) do
     t.string   "fact_text"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.float    "man_day"
   end
 
   add_index "facts", ["user_id"], name: "index_facts_on_user_id"
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150620012531) do
     t.string   "quotation_text"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.float    "man_day"
   end
 
   add_index "quotations", ["user_id"], name: "index_quotations_on_user_id"

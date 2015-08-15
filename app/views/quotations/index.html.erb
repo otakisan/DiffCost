@@ -8,6 +8,7 @@
       <th>User</th>
       <th>Project name</th>
       <th>Quotation text</th>
+      <th>Man-day</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= quotation.user %></td>
         <td><%= quotation.project_name %></td>
         <td><%= quotation.quotation_text %></td>
+        <td><%= quotation.man_day %></td>
         <td><%= link_to 'Show', quotation %></td>
         <td><%= link_to 'Edit', edit_quotation_path(quotation) %></td>
         <td><%= link_to 'Destroy', quotation, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -74,6 +74,6 @@ class QuotationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_params
-      params.require(:quotation).permit(:user_id, :project_name, :quotation_text)
+      params.require(:quotation).permit(:user_id, :project_name, :quotation_text, :man_day)
     end
 end
