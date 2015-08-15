@@ -86,7 +86,7 @@
 					var manDayMatch = /\b([0-9][0-9\.]*)(?=人日)/g.exec(matchArray[2]);
 					if(manDayMatch){
 						manDay = manDayMatch[1];
-						var regex = new RegExp(`\\b${manDay}人日`);
+						var regex = new RegExp("\\b" + manDay + "人日");
 						text = matchArray[2].replace(regex, "").trim();
 					}
 				

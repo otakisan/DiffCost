@@ -79,7 +79,7 @@
 				this.getTotalManDayText = function() {
 					var mandayQ = this.getTotalManDayOfQuotations();
 					var mandayF = this.getTotalManDayOfFacts();
-					return !mandayQ && !mandayF ? "" : `見積：${mandayQ} ／ 実績：${mandayF}`;
+					return !mandayQ && !mandayF ? "" : "見積：" + mandayQ + " ／ 実績：" + mandayF;
 				};
 
 				this.getTotalManDayOfQuotations = function() {
@@ -92,7 +92,7 @@
 
 				this.getTotalManDay = function(array) {
 					// TODO: 小数点の扱い 見た目上の合計と差異が出る 12.9 <=> 12.89999...
-					return !array ? "" : array.reduce(function(prevValue, currentValue, currentIndex, array){return prevValue + currentValue.man_day}, 0);
+					return !array ? "" : array.reduce(function(prevValue, currentValue){return prevValue + currentValue.man_day}, 0);
 				};
 
 				this.getPostData = function () {
